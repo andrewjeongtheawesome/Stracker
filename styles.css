@@ -1,0 +1,63 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+#videoContainer {
+    position: relative;
+    margin: auto;
+    width: 640px;
+    height: 480px;
+    overflow: hidden;
+}
+
+#videoElement {
+    width: 100%;
+    height: 100%;
+}
+
+#outputCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#status {
+    margin-top: 20px;
+}
+
+#buttons {
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    border-radius: 5px;
+}
+
+/* styles.css 파일의 내용 */
+#videoContainer {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+#videoElement {
+    width: 640px; /* 비디오 너비 설정 */
+}
+
+#outputCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+#status {
+    font-size: 24px;
+}
