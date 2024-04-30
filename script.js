@@ -1,57 +1,71 @@
-let isDetecting = false;
-let net;
+$(document).ready(function() {
+  const video = document.getElementById('video');
+  const status = document.getElementById('status');
+  const startButton = document.getElementById('startButton');
+  const stopButton = document.getElementById('stopButton');
+  let isRunning = false;
+  let intervalId; // setInterval 함수의 반환 값
 
-// Posnet 모델을 정의하는 함수
-async function loadPosenetModel() {
-    try {
-        net = await posenet.load();
-        console.log('Posenet model loaded successfully.');
-    } catch (error) {
-        console.error('Error loading Posenet model:', error);
-    }
-}
+  startButton.addEventListener('click', () => {
+      if (!isRunning) {
+          startVideo();
+          isRunning = true;
+          status.textContent = 'Running...';
+          intervalId = setInterval(detectEyes, 1000);
+      }
+  });
 
-async function setupCamera() {
-    try {
-        const videoElement = document.getElementById('videoElement');
-        const videoStream = await navigator.mediaDevices.getUserMedia({ video: true });
-        videoElement.srcObject = videoStream;
-    } catch (error) {
-        console.error('Error accessing camera:', error);
-    }
-}
+  stopButton.addEventListener('click', () => {
+      stopVideo();
+      isRunning = false;
+      status.textContent = 'Stopped';
 
-async function detectPose() {
-    if (!isDetecting) return;
-    const videoElement = document.getElementById('videoElement');
-    const outputCanvas = document.getElementById('outputCanvas');
-    const ctx = outputCanvas.getContext('2d');
+      clearInterval(intervalId);
+  });
 
-    const pose = await net.estimateSinglePose(videoElement, {
-        flipHorizontal: false
-    });
+  async function startVideo() {
+      try {
+          //실시간 영상 호출을 실시하면 충돌 발생
+          //const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+          //video.srcObject = stream;
+      } catch (err) {
+          console.error('Error accessing webcam: ', err);
+      }
+  }
 
-    // 감지된 포즈를 캔버스에 그립니다.
-    ctx.clearRect(0, 0, outputCanvas.width, outputCanvas.height);
-    posenet.drawSinglePose(pose, ctx);
+  function stopVideo() {
+      const stream = video.srcObject;
+      const tracks = stream.getTracks();
 
-    // 다음 프레임을 요청합니다.
-    requestAnimationFrame(detectPose);
-}
+      tracks.forEach(track => {
+          track.stop();
+      });
 
-async function startDetection() {
-    isDetecting = true;
-    await loadPosenetModel(); // Posnet 모델 로드
-    await setupCamera(); // 카메라 설정
-    detectPose(); // 포즈 감지 시작
-}
+      video.srcObject = null;
+  }
 
-function stopDetection() {
-    isDetecting = false;
-}
+  function detectEyes() {
+      const eyeStatus = document.getElementById('status');
 
-// 시작 버튼에 클릭 이벤트를 추가합니다.
-document.getElementById('startButton').addEventListener('click', startDetection);
-
-// 중지 버튼에 클릭 이벤트를 추가합니다.
-document.getElementById('stopButton').addEventListener('click', stopDetection);
+      $.ajax({
+          url: 'http://localhost:5000/detect',
+          type: 'GET',
+          //ajax method -> success/error
+          success: function(response) {
+              if (response.status === 'success') {
+                  console.log("status : ", response.eye_status);
+                  if (response.eye_status === 'open') {
+                      eyeStatus.textContent = '😊';
+                  } else {
+                      eyeStatus.textContent = '😴';
+                  }
+              } else {
+                  console.error('Error detecting eyes: ', response.message);
+              }
+          },
+          error: function(xhr, status, error) {
+              console.error('AJAX Error: ', error);
+          }
+      });
+  }
+});

@@ -3,23 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sleep Detection using PoseNet</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <title>Eye Detection</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Sleep Detection using PoseNet</h1>
-    <div id="videoContainer">
-        <video id="videoElement" autoplay></video>
-        <canvas id="outputCanvas" width="640" height="480"></canvas>
-        <div id="status">Status: <span id="sleepStatus">-</span></div> <!-- sleepStatus 추가 -->
+    <div class="container">
+        <div class="title">시선 감지(DEMO)</div>
+        <div id="video-container">
+            <video id="video" autoplay></video>
+            <div id="status"></div>
+        </div>
+        <div class="buttons">
+            <button id="startButton">Start</button>
+            <button id="stopButton">Stop</button>
+        </div>
     </div>
-    <div id="buttons">
-        <button id="startButton">Start</button>
-        <button id="stopButton">Stop</button>
-    </div>
-    <!-- TensorFlow.js와 PoseNet 라이브러리 추가 -->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.11.0"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet@3.4.0"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
