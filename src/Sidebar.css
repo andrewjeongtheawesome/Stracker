@@ -1,0 +1,192 @@
+.Side {
+  width: 20vw;
+  height: 50vh;
+  position: fixed;
+  background: #DCC5B3;
+  border-bottom-left-radius: 2vh;
+  right: 0;
+  z-index: 10;
+}
+
+.SideButton {
+  width: 2.36vw;
+  height: 2.08vh;
+  left: calc(100vw - 2.36vw - 1vw);
+  top: 2.56vh;
+  cursor: pointer;
+  position: absolute;
+}
+  
+.OutPictureX {
+  width: 1.2vw;
+  height: 2.2vh;
+  right: 0.56vw;
+  top: 1.04vh;
+  cursor: pointer;
+  position: absolute;
+}
+
+/*로그인 부분*/
+.Idbox {
+  width: 17vw;
+  height: 6.4vh;
+  top: 20%;
+  left: 7%;
+  font-size: 1.5vw;
+  position: absolute;
+  background: white;
+  border-radius: 1vh;
+  border: 0.14vw #674429 solid;
+  z-index: 0;
+}
+  
+.Passwordbox {
+  width: 17vw;
+  height: 6.4vh;
+  top: 35%;
+  left: 7%;
+  font-size: 1.5vw;
+  position: absolute;
+  background: white;
+  border-radius: 1vh;
+  border: 0.14vw #674429 solid;
+  z-index: 0;
+}
+
+.Loginbox {
+  width: 17vw;
+  height: 6.4vh;
+  top: 50%;
+  left: 7%;
+  font-size: 1.5vw;
+  position: absolute;
+  background: #674429;
+  border-radius: 1vh;
+  border: 0.14vw #674429 solid;
+  z-index: 0;
+  cursor: pointer;
+}
+
+.LoginText {
+  top: 20%;
+  left: 37%;
+  color: white;
+  font-size: 1.5vw;
+  font-weight: 700;
+  position: absolute;
+}
+
+.SingUpText {
+  top: 65%;
+  left: 40%;
+  color: black;
+  font-size: 1vw;
+  font-weight: 500;
+  cursor: pointer;
+  position: absolute;
+}
+
+/*하단 버튼 부분(블루투스, 로그아웃, 설정)*/
+.BluetoothPicture {
+  width: 1.2vw;
+  height: 2.3vh;
+  right: 3.13vw;
+  top: 44vh;
+  cursor: pointer;
+  position: absolute;
+}
+
+.LogOutPicture {
+  width: 1.2vw;
+  height: 2.08vh;
+  right: 1.39vw;
+  top: 44.1vh;
+  cursor: pointer;
+  position: absolute;
+}
+/*
+설정
+.SettingsPicture {
+  width: 1.39vw;
+  height: 2.08vh;
+  right: 1.39vw;
+  top: 44.1vh;
+  cursor: pointer;
+  position: absolute;
+}
+*/
+
+/*로그인 후*/
+.WelcomeMessage {
+  left: 2vw;
+  top: 17vh;
+  color: black;
+  font-size: 1.39vw;
+  font-weight: 600;
+  position: absolute;
+}
+
+.LoginCharacter {
+  width: 6.5vw;
+  height: 6.5vh;
+  top: 23%;
+  left: 15%;
+  position: absolute;
+}
+
+/*로그인 후*/
+.LoginCharacter {
+  width: 4.8vw;
+  height: 10vh;
+  left: 3.2vw;
+  top: 13vh;
+  cursor: pointer;
+  position: absolute;
+}
+
+.WelcomeMessageUsername {
+  left: 9.5vw;
+  top: 13.8vh;
+  color: black;
+  font-size: 1.39vw;
+  font-weight: 600;
+  position: absolute;
+}
+
+.WelcomeMessage1 {
+  left: 14vw;
+  top: 14.4vh;
+  color: black;
+  font-size: 1.2vw;
+  font-weight: 520;
+  position: absolute;
+}
+
+.WelcomeMessage2 {
+  left: 9.5vw;
+  top: 17.5vh;
+  color: black;
+  font-size: 1.2vw;
+  font-weight: 520;
+  position: absolute;
+}
+
+.LoginText1 {
+  left: 3vw;
+  top: 30vh;
+  color: black;
+  font-size: 1.2vw;
+  font-weight: 500;
+  white-space: pre-line;
+  position: absolute;
+}
+
+.LoginText2 {
+  left: 2vw;
+  top: 33vh;
+  color: black;
+  font-size: 1.2vw;
+  font-weight: 500;
+  white-space: pre-line;
+  position: absolute;
+}

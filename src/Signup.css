@@ -1,0 +1,303 @@
+.SignUp {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  background: white;
+  cursor: pointer;
+}
+
+.Background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(249, 228, 211, 0.33);
+}
+
+.Logo {
+  width: 8.26vw;
+  height: 8.26vw;
+  left: 1.11vw;
+  top: 1vh;
+  position: absolute;
+}
+
+.SideButton {
+  width: 2.36vw;
+  height: 2.08vh;
+  left: calc(100vw - 2.36vw - 1vw);
+  top: 3vh;
+  cursor: pointer;
+  position: absolute;
+}
+
+.Titleline {
+  width: 15.28vw;
+  height: 0;
+  top: 10%;
+  left: 43.75vw;
+  position: absolute;
+  border: 0.21vw solid #DCC5B3;
+}
+
+.TitleText {
+  top: 12%;
+  left: 45.14vw;
+  position: absolute;
+  color: #C4AB97;
+  font-size: 3.13vw;
+  font-family: 'Inter';
+  font-weight: 700;
+  word-wrap: break-word;
+}
+
+/*입력란 종목별 타이틀 선*/
+.Emailline {
+  width: 15.28vw;
+  height: 0;
+  top: 32%;
+  left: 15.07vw;
+  position: absolute;
+  border: 0.07vw solid #674429;
+}
+
+.Passwordline {
+  width: 15.28vw;
+  height: 0;
+  top: 43%;
+  left: 15vw;
+  position: absolute;
+  border: 0.07vw solid #674429;
+}
+
+.Passwordcheckline {
+  width: 15.28vw;
+  height: 0;
+  top: 54%;
+  left: 15vw;
+  position: absolute;
+  border: 0.07vw solid #674429;
+}
+
+.Nameline {
+  width: 15.28vw;
+  height: 0;
+  top: 65%;
+  left: 15vw;
+  position: absolute;
+  border: 0.07vw solid #674429;
+}
+
+/*입력란 종목별 타이틀*/
+.EmailText {
+  position: absolute;
+  color: black;
+  font-size: 1.94vw;
+  font-family: 'Inter';
+  font-weight: 400;
+  word-wrap: break-word;
+  left: 15.49vw;
+  top: 35vh;
+}
+
+.PasswordText {
+  position: absolute;
+  color: black;
+  font-size: 1.94vw;
+  font-family: 'Inter';
+  font-weight: 400;
+  word-wrap: break-word;
+  left: 15.42vw;
+  top: 46vh;
+}
+
+.PasswordCheckText {
+  position: absolute;
+  color: black;
+  font-size: 1.94vw;
+  font-family: 'Inter';
+  font-weight: 400;
+  word-wrap: break-word;
+  left: 15.42vw;
+  top: 57vh;
+}
+
+.NameText {
+  position: absolute;
+  color: black;
+  font-size: 1.94vw;
+  font-family: 'Inter';
+  font-weight: 400;
+  word-wrap: break-word;
+  left: 15.49vw;
+  top: 68vh;
+}
+
+/*입력란*/
+
+.SUPasswordbox {
+  width: 51.46vw;
+  height: 9.77vh;
+  left: 33.54vw;
+  top: 43vh;
+  font-size: 1.5vw;
+  font-family: 'Inter';
+  font-weight: 400;
+  word-wrap: break-word;
+  position: absolute;
+  background: white;
+  border: 0.14vw solid #674429;
+}
+
+.SUPasswordcheckbox {
+  width: 51.46vw;
+  height: 9.77vh;
+  left: 33.54vw;
+  top: 54vh;
+  font-size: 1.5vw;
+  font-family: 'Inter';
+  font-weight: 400;
+  word-wrap: break-word;
+  position: absolute;
+  background: white;
+  border: 0.14vw solid #674429;
+}
+
+.SUNamebox {
+  width: 51.46vw;
+  height: 9.77vh;
+  left: 33.54vw;
+  top: 65vh;
+  font-size: 1.5vw;
+  font-family: 'Inter';
+  font-weight: 400;
+  word-wrap: break-word;
+  position: absolute;
+  background: white;
+  border: 0.14vw solid #674429;
+}
+
+/* 메일 입력*/
+.AtSymbol {
+  left: 58.33vw;
+  top: 34vh;
+  position: absolute;
+  color: black;
+  font-size: 2.08vw;
+  font-family: 'Inter';
+  font-weight: 400;
+  word-wrap: break-word;
+}
+
+.SUEmailbox {
+  width: 23.89vw;
+  height: 9.77vh;
+  left: 33.54vw;
+  top: 32vh;
+  font-size: 1.5vw;
+  font-family: 'Inter';
+  font-weight: 400;
+  word-wrap: break-word;
+  position: absolute;
+  background: white;
+  border: 0.14vw solid #674429;
+}
+
+.SUEmailselfbox {
+  width: 22.78vw;
+  height: 9.77vh;
+  left: 61.11vw;
+  top: 32vh;
+  position: absolute;
+  background: white;
+  border: 0.14vw solid #674429;
+  display: flex;
+  align-items: center;
+  padding: 0 0.69vw;
+  justify-content: space-between;
+}
+
+.SUEmailselfboxInner {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  padding: 0 0.69vw;
+}
+
+.EmailArrow {
+  width: 1.39vw;
+  height: 2.08vh;
+  top: 40%;
+  left: 22.22vw;
+  position: absolute;
+  transform-origin: 0 0;
+  cursor: pointer;
+}
+
+.EmailDropdown {
+  top: 9.77vh;
+  left: 0vw;
+  width: 100%;
+  position: absolute;
+  background: white;
+  border: 0.14vw solid #674429;
+  z-index: 1;
+}
+
+.EmailOption {
+  padding: 0.69vw;
+  cursor: pointer;
+}
+
+.EmailOption:hover {
+  background: #f0f0f0;
+}
+
+.CustomEmailDomainInput {
+  width: calc(100% - 0.69vw);
+  height: 100%;
+  border: none;
+  outline: none;
+  font-size: 1.1vw;
+  font-family: 'Inter';
+  font-weight: 400;
+}
+
+.CustomEmailOptionInput {
+  width: calc(100% - 0.69vw);
+  height: 100%;
+  border: none;
+  outline: none;
+  font-size: 1vw;
+  font-family: 'Inter';
+  font-weight: 400;
+}
+
+/*가입완료*/
+.SUFinishbox {
+  width: 12.99vw;
+  height: 9.77vh;
+  top: 85%;
+  left: 45%;
+  position: absolute;
+  background: #674429;
+  border-radius: 0.69vw;
+  border: 0.14vw solid #674429;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.FinishText {
+  position: absolute;
+  color: white;
+  font-size: 1.94vw;
+  font-family: 'Inter';
+  font-weight: 600;
+  word-wrap: break-word;
+  top: 18%;
+  left: 20%;
+}

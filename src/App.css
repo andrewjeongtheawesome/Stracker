@@ -1,0 +1,388 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: 'Inter', sans-serif;
+}
+
+.Main {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: white;
+}
+
+.Background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(249, 228, 211, 0.33);
+  z-index: 0;
+}
+
+.Logo {
+  width: 8.26vw;
+  height: 8.26vw;
+  left: 1.11vw;
+  top: 1vh;
+  position: absolute;
+  cursor: pointer;
+}
+
+/* 카메라 */
+.CameraScreen {
+  width: 62.22vw;
+  height: 68.25vh; 
+  position: absolute;
+  left: 3.89vw;
+  top: 15.82vh;
+  background: #DCC5B3;
+  border-radius: 4.17vh;
+  z-index: 1;
+}
+
+/* 웹캠 입출력 */
+.videoInput, .outputCanvas {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 영상이 요소 크기에 맞게 채워지도록 설정 */
+  border-radius: inherit; /* 부모 요소의 border-radius 상속 */
+}
+
+.startButton {
+  width: 10.69vw; 
+  height: 7.22vh; 
+  position: absolute;
+  left: 29.69vw;
+  top: 46.57vh;
+  background: #674429;
+  border-radius: 1.04vh; 
+  border: 0.21vh solid #674429; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2; 
+}
+
+.StartText {
+  font-size: 1.8vw;
+  font-weight: 600;
+  color: white;
+  text-align: center;
+  position: relative;
+  z-index: 3; 
+}
+
+/*하단 버튼*/
+/*
+.UnderPlayButton {
+  width: 3.8vw; 
+  height: 5vh; 
+  position: absolute;
+  top: 85%; 
+  left: 28%;
+  background: #674429;
+  border-radius: 1.04vh; 
+  border: 0.21vh solid #674429; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2; 
+}
+
+.UnderPlay {
+  width: 1.8vw; 
+  height: 3vh; 
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  cursor: pointer;
+  top: 17%; 
+  left: 28%;
+  z-index: 2;
+}
+
+.UnderPauseButton {
+  width: 3.8vw; 
+  height: 5vh; 
+  position: absolute;
+  top: 85%; 
+  left: 33%;
+  background: #674429;
+  border-radius: 1.04vh; 
+  border: 0.21vh solid #674429; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2; 
+}
+
+.UnderPause {
+  width: 2vw; 
+  height: 3vh; 
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  cursor: pointer;
+  top: 17%; 
+  left: 24%;
+  z-index: 2;
+}
+*/
+.UnderResetButton {
+  width: 3.8vw; 
+  height: 5vh; 
+  position: absolute;
+  top: 85%; 
+  left: 33%;
+  background: #674429;
+  border-radius: 1.04vh; 
+  border: 0.21vh solid #674429; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2; 
+}
+
+.UnderReset {
+  width: 2vw; 
+  height: 3.8vh; 
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  cursor: pointer;
+  top: 13%; 
+  left: 26%;
+  z-index: 2;
+}
+
+/*시간 정보*/
+.Time {
+  width: 17.71vw; 
+  height: 8.40vh;
+  position: absolute;
+  left: 74.17vw; 
+  top: 20vh;
+  z-index: 1;
+}
+
+.TimerDate {
+  font-size: 1.5vw; 
+  font-weight: 700;
+  color: black;
+  text-align: center;
+}
+
+.TimerTime {
+  font-size: 2.5vw; 
+  font-weight: 700;
+  color: black;
+  text-align: center;
+}
+
+/*상태*/
+.State {
+  width: 18.75vw; 
+  height: 15.93vh; 
+  position: absolute;
+  left: 73.61vw; 
+  top: 34.77vh; 
+}
+
+.StateBox {
+  width: 100%;
+  height: 100%;
+  background: white;
+  border-radius: 2.08vh; 
+  border: 0.21vh solid #DCC5B3;
+  position: relative;
+  z-index: 1; 
+}
+
+.StatePicture {
+  width: 3vw;
+  height: 5vh; 
+  background: black;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 23.31%; 
+  left: 43%;
+  z-index: 2;
+}
+
+
+.StateText {
+  font-size: 1vw;
+  font-weight: 700;
+  color: black;
+  position: absolute;
+  text-align: center;
+  left: 40%;
+  top: 65%;
+  z-index: 2;
+}
+
+/*심박수*/
+.HeartRate {
+  width: 18.33vw; 
+  height: 8.51vh; 
+  position: absolute;
+  left: 73.47vw; 
+  top: 55.57vh; 
+  z-index: 1; 
+}
+
+.HeartRateTitleBox {
+  width: 8vw; 
+  height: 4.17vh; 
+  background: #DCC5B3;
+  border-radius: 2.08vh; 
+  position: absolute;
+  top: -5%;
+  left: 0%;
+  z-index: 1; 
+}
+
+.HeartRateTitle {
+  font-size: 1vw; 
+  font-weight: 700;
+  color: white;
+  text-align: center;
+  line-height: 4.17vh;
+  position: absolute;
+  left: 17%;
+  z-index: 2; 
+}
+
+.HeartRatePicture {
+  width: 2.8vw; 
+  height: 3.34vh;
+  position: absolute;
+  top: 57%;
+  left: 25%;
+  z-index: 2; 
+}
+
+.HeartRateBpm {
+  font-size: 1vw;
+  font-weight: 700;
+  color: black;
+  position: absolute;
+  left: 9.09vw; 
+  top: 5vh; 
+  z-index: 2; 
+}
+
+/*졸음 횟수*/
+.SleepCount {
+  width: 17.43vw; 
+  height: 8.13vh; 
+  position: absolute;
+  left: 73.54vw;
+  top: 68.18vh; 
+  z-index: 1; 
+}
+
+.SleepCountTitleBox {
+  width: 8vw; 
+  height: 4.17vh; 
+  background: #DCC5B3;
+  border-radius: 2.08vh; 
+  position: absolute;
+  top: -5%;
+  left: 0%;
+  z-index: 1; 
+}
+
+.SleepCountTitle {
+  font-size: 1vw; 
+  font-weight: 700;
+  color: white;
+  text-align: center;
+  line-height: 4.17vh;
+  position: absolute;
+  left: 22%;
+  z-index: 2; 
+}
+
+.SleepCountPicture {
+  width: 1.8vw; 
+  height: 3.4vh;
+  position: absolute;
+  top: 70%;
+  left: 30%;
+  z-index: 2; 
+}
+
+.SleepCountNumber {
+  font-size: 1vw;
+  font-weight: 700;
+  color: black;
+  position: absolute;
+  left: 9.09vw; 
+  top: 6vh; 
+  z-index: 2; 
+}
+
+/*집중도*/
+/*
+.Concentration {
+  width: 17.43vw; 
+  height: 8.13vh; 
+  position: absolute;
+  left: 73.54vw;
+  top: 66.18vh; 
+  z-index: 1; 
+}
+
+.ConcentrationValue {
+  width: 15vw; 
+  height: 2.04vh; 
+  background: linear-gradient(90deg, #DCC5B3 0%, #C4AB97 31%, #A48871 60%, #84644B 80%, #614026 100%);
+  border-radius: 1.04vh;
+  position: absolute;
+  top: 70%; 
+  left: 10%;
+  z-index: 2; 
+}
+
+.ConcentrationValueTri {
+  width: 0.69vw; 
+  height: 1.11vh;
+  position: absolute;
+  left: 37.04%; 
+  top: 65%; 
+  z-index: 2;
+}
+
+
+.ConcentrationTitleBox {
+  width: 8vw; 
+  height: 4.17vh; 
+  background: #DCC5B3;
+  border-radius: 2.08vh; 
+  position: absolute;
+  top: -5%;
+  left: 0%;
+  z-index: 1; 
+}
+
+.ConcentrationTitle {
+  font-size: 1vw; 
+  font-weight: 700;
+  color: white;
+  text-align: center;
+  line-height: 4.17vh;
+  position: absolute;
+  left: 17%;
+  z-index: 2; 
+}
+*/
