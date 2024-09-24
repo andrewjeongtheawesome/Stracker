@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
+import './Sidebar.css';
 import SignUp from './Signup';
 import Sidebar from './Sidebar';
 import logo from './_logo.png';
@@ -8,16 +9,15 @@ import StateLoading from './_StateLoading.gif'; //상태gif-로딩중
 import StateStudy from './_StateStudy.gif'; //상태gif-공부중
 import StateSleep from './_StateSleep.gif'; //상태gif-조는중
 import StateNoFace from './_StateNoFace.gif'; //상태gif-얼굴없음
-//import UnderPlay from './_UnderPlay.png';
-//import UnderPause from './_UnderPause.png';
 import UnderReset from './_UnderReset.png';
 import HeartRatePicture from './_HeartRatePicture.png';
 import SleepCountPicture from './_SleepCountPicture.png';
-// import ConcentrationValueTri from './_ConcentrationValueTri.png'; // 집중도 그래프 화살표
-import './Sidebar.css';
 import { auth, db } from './firebaseConfig';
 import { doc, updateDoc, getDoc } from 'firebase/firestore';
 import { signOut } from 'firebase/auth';
+//import UnderPlay from './_UnderPlay.png'; //재생 버튼
+//import UnderPause from './_UnderPause.png'; //일시정지 버튼
+//import ConcentrationValueTri from './_ConcentrationValueTri.png'; // 집중도 그래프 화살표
 
 const App = () => {
   const [sideBarVisible, setSidebarVisible] = useState(false); // 사이드바 보이기 여부
@@ -82,7 +82,7 @@ const App = () => {
   // 120초 이상시 졸았다고 판단
   // 심박계 연결시 120 이상 눈 감고 있음 + 심박계 45이하시 졸았다고 판단
   useEffect(() => {
-    if (eyeClosedTime >= 120) {
+    if (eyeClosedTime >= 30) {
       if (heartRate !== '---' && heartRate <= 45) {
         setSleepCount(prevCount => prevCount + 1);
       } else if (heartRate === '---') {

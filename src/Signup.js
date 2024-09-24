@@ -66,7 +66,7 @@ const SignUp = ({toggleSidebar, sideBarVisible, navigateToMain, toggleSignUp}) =
       const user = userCredential.user;
 
       await setDoc(doc(db, "users", user.uid), {
-        userId,
+        //userId, ID 필요없어서 없애봄
         userName,
         userEmail: email,
         userPassword,
