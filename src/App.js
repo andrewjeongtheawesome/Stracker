@@ -14,7 +14,7 @@ import HeartRatePicture from './_HeartRatePicture.png';
 import SleepCountPicture from './_SleepCountPicture.png';
 import { auth, db } from './firebaseConfig';
 import { doc, updateDoc, getDoc } from 'firebase/firestore';
-import { signOut } from 'firebase/auth';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 //import UnderPlay from './_UnderPlay.png'; //재생 버튼
 //import UnderPause from './_UnderPause.png'; //일시정지 버튼
 //import ConcentrationValueTri from './_ConcentrationValueTri.png'; // 집중도 그래프 화살표
@@ -35,6 +35,7 @@ const App = () => {
   const [eyeClosedTime, setEyeClosedTime] = useState(0);
   const [modelStatus, setModelStatus] = useState('disconnected'); // 'disconnected', 'connecting', 'connected'
   const [frameIntervalId, setFrameIntervalId] = useState(null);
+  const [userName, setUserName] = useState('');  // userName 상태 정의
   const timerIntervalId = useRef(null);
   const timerRef = useRef(null); // 타이머 참조
   const videoRef = useRef(null);
@@ -156,6 +157,41 @@ const App = () => {
       console.log(`졸음 횟수: ${sleepCount}`);
     }
   }, [sleepCount]);
+
+  // 로그인 상태 유지 및 사용자 정보 불러오기
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        // 사용자가 로그인 상태일 때
+        setUser(user);
+        setIsLoggedIn(true);
+        console.log('로그인 상태 유지됨:', user.email);
+
+        // Firestore에서 사용자 데이터 가져오기
+        const userDocRef = doc(db, 'users', user.uid);
+        const userDoc = await getDoc(userDocRef);
+
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          setUserName(userData.userName);  // Firestore에서 가져온 사용자명 설정
+          setElapsedTime(userData.studyTime || 0);
+          setSleepCount(userData.sleepCount || 0);
+          console.log(`사용자 정보 동기화: ${userData.userName}`);
+        } else {
+          console.error('사용자 정보를 찾을 수 없습니다.');
+        }
+
+      } else {
+        // 로그아웃 상태일 때
+        setUser(null);
+        setIsLoggedIn(false);
+        console.log('로그아웃 상태');
+      }
+    });
+
+    // 컴포넌트 언마운트 시 리스너 정리
+    return () => unsubscribe();
+  }, []);  // 빈 배열은 컴포넌트가 처음 렌더링될 때만 실행
 
   // 데이터베이스에서 사용자 데이터 동기화
   const syncUserData = async () => {

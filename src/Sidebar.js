@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Sidebar.css';
 import SideButton from './_SideButton.png';
 import OutPictureX from './_OutPictureX.png';
 import LogOutPicture from './_LogOutPicture.png';
 import BluetoothPicture from './_BluetoothPicture.png';
 import LoginCharacter from './_LoginCharacter.png';
-import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { signInWithEmailAndPassword, signOut, onAuthStateChanged} from 'firebase/auth';
 import { auth, db } from './firebaseConfig';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 
@@ -20,7 +20,33 @@ const Sidebar = ({
   const [userName, setUserName] = useState('');
 
   const handleUserId = (event) => setUserId(event.target.value);
-  const handleUserPassword = (event) => setUserPassword(event.target.value);
+  const handleUserPassword = (event) => setUserPassword(event.target.value);  // Firebase Auth의 로그인 상태를 추적하는 useEffect 추가
+  
+  // Firebase Auth의 로그인 상태를 추적하는 useEffect 추가
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        setIsLoggedIn(true);
+        setUser(user);
+
+        // Firestore에서 사용자 데이터 가져오기
+        const userDocRef = doc(db, 'users', user.uid);
+        const userDoc = await getDoc(userDocRef);
+
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          setUserName(userData.userName);  // Firestore에서 가져온 사용자명 설정
+        } else {
+          console.error('사용자 정보를 찾을 수 없습니다.');
+        }
+      } else {
+        setIsLoggedIn(false);
+        setUserName('사용자');  // 로그아웃 시 기본값 설정
+      }
+    });
+
+    return () => unsubscribe();  // 컴포넌트 언마운트 시 리스너 해제
+  }, []);
 
   // 로그인 로직
 const handleLogin = async () => {
