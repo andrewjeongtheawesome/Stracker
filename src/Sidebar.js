@@ -12,7 +12,8 @@ import { doc, getDoc, updateDoc } from 'firebase/firestore';
 const Sidebar = ({
   sideBarVisible, toggleSidebar, toggleSignUp, user, isLoggedIn, 
   setIsLoggedIn, setElapsedTime, setSleepCount, setHeartRate, 
-  setUser, elapsedTime, sleepCount, timerTime 
+  setUser, elapsedTime, sleepCount, timerTime, resetAppStateWithSync 
+  ,resetAppState
 }) => {
   const [userId, setUserId] = useState('');
   const [userPassword, setUserPassword] = useState('');
@@ -21,50 +22,69 @@ const Sidebar = ({
   const handleUserId = (event) => setUserId(event.target.value);
   const handleUserPassword = (event) => setUserPassword(event.target.value);
 
-  // 로그인
-  const handleLogin = async () => {
+  // 로그인 로직
+const handleLogin = async () => {
+  try {
+    const email = `${userId}`;  // 사용자 이메일 생성
+    const userCredential = await signInWithEmailAndPassword(auth, email, userPassword);  // 로그인
+    const user = userCredential.user;
+
+    // Firestore에서 사용자 데이터 가져오기
+    const userDoc = await getDoc(doc(db, "users", user.uid));
+
+    if (userDoc.exists()) {
+      const userData = userDoc.data();
+      
+      // Firestore에서 가져온 데이터로 상태 업데이트
+      setUserName(userData.userName);
+      setElapsedTime(userData.studyTime);
+      setSleepCount(userData.sleepCount);
+      setUser(user);
+      setIsLoggedIn(true);
+      console.log(`로그인 성공: 사용자 이름: ${userData.userName}, 졸음 횟수: ${userData.sleepCount}, 공부 시간: ${userData.studyTime}`);
+
+      // Firestore에서 데이터를 가져온 후 상태 동기화
+      await resetAppStateWithSync(user.uid);
+    } else {
+      console.error('사용자 정보를 찾을 수 없습니다.');
+    }
+  } catch (error) {
+    console.error('로그인 실패:', error);
+    alert('아이디 또는 비밀번호가 잘못되었습니다.');
+  }
+};
+
+// 로그아웃 함수
+const handleLogOut = async () => {
+  if (user) {
     try {
-      const email = `${userId}`;
-      const userCredential = await signInWithEmailAndPassword(auth, email, userPassword);
-      const userDoc = await getDoc(doc(db, "users", userCredential.user.uid));
+      const userDoc = doc(db, "users", user.uid);
 
-      if (userDoc.exists()) {
-        const userData = userDoc.data();
-        setUserName(userData.userName);
-        setElapsedTime(userData.studyTime);
-        setSleepCount(userData.sleepCount);
-        setUser(userCredential.user);
-        setIsLoggedIn(true);
-        console.log(`로그인 성공: 사용자 이름: ${userData.userName}, 졸음 횟수: ${userData.sleepCount}, 공부 시간: ${userData.studyTime}`);
-      } else {
-        console.error('사용자 정보를 찾을 수 없습니다.');
-      }
+      // Firestore에 학습 시간 및 졸음 횟수 업데이트
+      await updateDoc(userDoc, {
+        studyTime: timerTime,   // 타이머 시간 저장
+        sleepCount: sleepCount  // 졸음 횟수 저장
+      });
+
+      // Firebase 로그아웃
+      await signOut(auth);
+      console.log('로그아웃 성공');
+
+      // 상태 초기화 - 로그아웃 후 resetAppState 호출
+      resetAppState();  // 상태 초기화
+
     } catch (error) {
-      console.error('로그인 실패:', error);
-      alert('아이디 또는 비밀번호가 잘못되었습니다.');
+      console.error('로그아웃 실패:', error);
     }
-  };
+  }
 
-  // 로그아웃
-  const handleLogOut = async () => {
-    if (user) {
-      try {
-        const userDoc = doc(db, "users", user.uid);
-        await updateDoc(userDoc, {
-          studyTime: timerTime,
-          sleepCount: sleepCount
-        });
-        await signOut(auth);
-        console.log('로그아웃 성공');
-      } catch (error) {
-        console.error('로그아웃 실패:', error);
-      }
-    }
-    setIsLoggedIn(false);
-    setUser(null);
-    setElapsedTime(0);
-    setSleepCount(0);
-  };
+  // 로그아웃 후 상태 리셋
+  setIsLoggedIn(false);
+  setUser(null);
+  setElapsedTime(0);  // 타이머 시간 리셋
+  setSleepCount(0);   // 졸음 횟수 리셋
+};
+
 
   // Bluetooth 연결 함수
   const connectBluetooth = async () => {

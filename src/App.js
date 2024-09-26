@@ -57,6 +57,64 @@ const App = () => {
     return StateNoFace;
   };
 
+  // 초기 상태 설정 로직
+  const resetAppState = () => {
+    setTimerTime(0);
+    pauseTimer();
+    if (videoRef.current) {
+      const stream = videoRef.current.srcObject;
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+      }
+      videoRef.current.srcObject = null;
+    }
+    setIsStarted(false);
+    setModelStatus('disconnected');
+    setEyeState('연결 안됨');
+    setHeartRate('---');
+    setSleepCount(0);
+    setElapsedTime(0);
+    setFrameIntervalId(null);
+    console.log('초기 상태로 설정되었습니다.');
+  };
+
+  //실행 중 로그인시 초기 상태 설정 로직
+  const resetAppStateWithSync = async (userId) => {
+    try {
+      // Firestore에서 사용자 데이터 가져오기
+      const userDoc = await getDoc(doc(db, "users", userId));
+  
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+  
+        // 타이머 및 졸음 횟수 동기화
+        setElapsedTime(userData.studyTime || 0);
+        setSleepCount(userData.sleepCount || 0);
+        setTimerTime(userData.studyTime || 0); // timerTime과 elapsedTime을 동기화
+        console.log(`사용자 정보 동기화: 공부 시간: ${userData.studyTime}, 졸음 횟수: ${userData.sleepCount}`);
+      } else {
+        console.error('사용자 정보를 찾을 수 없습니다.');
+      }
+    } catch (error) {
+      console.error('데이터 동기화 중 오류 발생:', error);
+    }
+  
+    // 타이머 및 카메라 상태 초기화
+    pauseTimer(); // 타이머 정지
+    if (videoRef.current) {
+      const stream = videoRef.current.srcObject;
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop()); // 웹캠 스트림 종료
+      }
+      videoRef.current.srcObject = null;
+    }
+    setIsStarted(false);
+    setModelStatus('disconnected');
+    setEyeState('연결 안됨');
+    setHeartRate('---');
+    setFrameIntervalId(null);
+  };
+
   // 오늘 날짜 넣기 및 사용자 시간 동기화
   useEffect(() => {
     const today = new Date();
@@ -79,7 +137,7 @@ const App = () => {
   }, [isStarted]);
 
   // eyeClosedTime = 눈 감긴 시간
-  // 120초 이상시 졸았다고 판단
+  // 30초 이상시 졸았다고 판단
   // 심박계 연결시 120 이상 눈 감고 있음 + 심박계 45이하시 졸았다고 판단
   useEffect(() => {
     if (eyeClosedTime >= 30) {
@@ -315,10 +373,17 @@ const App = () => {
     <div className="Main">
       {currentPage === 'signup' ? (
         <SignUp 
+          resetAppState={resetAppState}  // resetAppState를 props로 전달
           toggleSidebar={() => setSidebarVisible(!sideBarVisible)} 
           sideBarVisible={sideBarVisible}
           navigateToMain={navigateToMain} 
-          toggleSignUp={toggleSignUp} />
+          toggleSignUp={toggleSignUp} 
+          setElapsedTime={setElapsedTime}
+          setSleepCount={setSleepCount}
+          setUser={setUser}
+          setIsLoggedIn={setIsLoggedIn}
+          resetAppStateWithSync={resetAppStateWithSync}
+        />
       ) : (
         <>
           <div className="Background" />
@@ -345,6 +410,7 @@ const App = () => {
             isLoggedIn={isLoggedIn}
             setIsLoggedIn={setIsLoggedIn}
             handleLogOut={handleLogOut}
+            resetAppState={resetAppState}
             setHeartRate={setHeartRate}
             setElapsedTime={setElapsedTime} // elapsedTime 업데이트 함수 전달
             setSleepCount={setSleepCount}   // sleepCount 업데이트 함수 전달
@@ -353,6 +419,7 @@ const App = () => {
             sleepCount={sleepCount}         // sleepCount 값 전달
             timerTime={timerTime}           // timerTime 전달
             setTimerTime={setTimerTime}     // timerTime 업데이트 함수 전달
+            resetAppStateWithSync={resetAppStateWithSync}
           />
           <div className="Time">
             <div className="TimerDate">{currentDate}</div>

@@ -5,10 +5,14 @@ import logo from './_logo.png';
 import SideButton from './_SideButton.png';
 import EmailArrow from './_EmailArrow.png';
 import { auth, db } from './firebaseConfig';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { resetAppStateWithSync } from './App'; // App.js에서 만든 함수 가져오기
+import App from './App';
 
-const SignUp = ({toggleSidebar, sideBarVisible, navigateToMain, toggleSignUp}) => {
+const SignUp = ({toggleSidebar, sideBarVisible, navigateToMain, 
+  toggleSignUp, resetAppState, setElapsedTime, setSleepCount, 
+  setUser, setIsLoggedIn, resetAppStateWithSync}) => {
   const [userId, setUserId] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [userPasswordCheck, setUserPasswordCheck] = useState('');
@@ -75,12 +79,45 @@ const SignUp = ({toggleSidebar, sideBarVisible, navigateToMain, toggleSignUp}) =
       });
 
       alert("회원가입이 완료되었습니다.");
-      navigateToMain();
+
+      resetAppState();  // 회원가입이 완료된 후 초기 상태로 설정
+      navigateToMain(); // 메인 페이지로 이동
+
     } catch (error) {
       console.error("Error signing up: ", error);
       alert("회원가입에 실패했습니다. 에러 메시지: " + error.message);
     }
   };
+
+  // Sidebar.js
+  const handleLogin = async () => {
+    try {
+      const email = `${userId}`;
+      const userCredential = await signInWithEmailAndPassword(auth, email, userPassword);
+      const user = userCredential.user;
+
+      // 사용자 정보 동기화
+      await resetAppStateWithSync(user.uid);  // 로그인 후 상태 동기화
+
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        setUserName(userData.userName);
+        setElapsedTime(userData.studyTime);
+        setSleepCount(userData.sleepCount);
+        setUser(user);
+        setIsLoggedIn(true);
+        console.log(`로그인 성공: 사용자 이름: ${userData.userName}, 졸음 횟수: ${userData.sleepCount}, 공부 시간: ${userData.studyTime}`);
+      } else {
+        console.error('사용자 정보를 찾을 수 없습니다.');
+      }
+    } catch (error) {
+      console.error('로그인 실패:', error);
+      alert('아이디 또는 비밀번호가 잘못되었습니다.');
+    }
+  };
+
 
   return (
     <div className="SignUp">
