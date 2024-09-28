@@ -13,7 +13,7 @@ const Sidebar = ({
   sideBarVisible, toggleSidebar, toggleSignUp, user, isLoggedIn, 
   setIsLoggedIn, setElapsedTime, setSleepCount, setHeartRate, 
   setUser, elapsedTime, sleepCount, timerTime, resetAppStateWithSync 
-  ,resetAppState
+  ,resetAppState, saveDailyData
 }) => {
   const [userId, setUserId] = useState('');
   const [userPassword, setUserPassword] = useState('');
@@ -84,33 +84,24 @@ const handleLogin = async () => {
 const handleLogOut = async () => {
   if (user) {
     try {
+      await saveDailyData(); // 로그아웃 시 하루 데이터 저장
       const userDoc = doc(db, "users", user.uid);
-
-      // Firestore에 학습 시간 및 졸음 횟수 업데이트
       await updateDoc(userDoc, {
-        studyTime: timerTime,   // 타이머 시간 저장
-        sleepCount: sleepCount  // 졸음 횟수 저장
+        studyTime: timerTime,
+        sleepCount: sleepCount
       });
-
-      // Firebase 로그아웃
       await signOut(auth);
       console.log('로그아웃 성공');
-
-      // 상태 초기화 - 로그아웃 후 resetAppState 호출
-      resetAppState();  // 상태 초기화
-
+      resetAppState();
     } catch (error) {
       console.error('로그아웃 실패:', error);
     }
   }
-
-  // 로그아웃 후 상태 리셋
   setIsLoggedIn(false);
   setUser(null);
-  setElapsedTime(0);  // 타이머 시간 리셋
-  setSleepCount(0);   // 졸음 횟수 리셋
+  setElapsedTime(0);
+  setSleepCount(0);
 };
-
 
   // Bluetooth 연결 함수
   const connectBluetooth = async () => {
