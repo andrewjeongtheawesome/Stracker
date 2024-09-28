@@ -26,8 +26,8 @@ const Sidebar = ({
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        setIsLoggedIn(true);
-        setUser(user);
+        //setIsLoggedIn(true);
+        //setUser(user);
 
         // Firestore에서 사용자 데이터 가져오기
         const userDocRef = doc(db, 'users', user.uid);
@@ -40,7 +40,7 @@ const Sidebar = ({
           console.error('사용자 정보를 찾을 수 없습니다.');
         }
       } else {
-        setIsLoggedIn(false);
+        //setIsLoggedIn(false);
         setUserName('사용자');  // 로그아웃 시 기본값 설정
       }
     });
