@@ -15,7 +15,7 @@ const Sidebar = ({
   sideBarVisible, toggleSidebar, toggleSignUp, user, isLoggedIn,
   setIsLoggedIn, setElapsedTime, setSleepCount, setHeartRate,
   setUser, elapsedTime, sleepCount, timerTime, resetAppStateWithSync,
-  resetAppState, saveDailyData
+  resetAppState, saveDailyData, goToGraph
 }) => {
   const [userId, setUserId] = useState('');
   const [userPassword, setUserPassword] = useState('');
@@ -124,13 +124,13 @@ const Sidebar = ({
   };
 
   // 그래프 보기
-  const goToGraph = () => {
-    if (user) {
-      setShowGraph(true);
-    } else {
-      console.error("사용자 정보가 없습니다. 로그인 후 시도하세요.");
-    }
-  };
+  // const handleGraphButtonClick = () => {
+  //   if (user) {
+  //     setShowGraph(true);
+  //   } else {
+  //     console.error("사용자 정보가 없습니다. 로그인 후 시도하세요.");
+  //   }
+  // };
 
   // 회원가입 화면 전환
   const handleSignUpClick = () => {
@@ -175,8 +175,7 @@ const Sidebar = ({
                   className="Line"
                   src={Line}
                   alt="Line"/>
-                  <div className="GraphButton" 
-                  onClick={goToGraph}>
+                  <div className="GraphButton" onClick={goToGraph}>
                       그래프 확인하기
                   </div>
                   <img

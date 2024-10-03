@@ -38,6 +38,7 @@ const App = () => {
   const [frameIntervalId, setFrameIntervalId] = useState(null);
   const [userName, setUserName] = useState('');  // userName 상태 정의
   const [showGraph, setShowGraph] = useState(false);// 그래프
+  
   const timerIntervalId = useRef(null);
   const timerRef = useRef(null); // 타이머 참조
   const videoRef = useRef(null);
@@ -435,6 +436,10 @@ const App = () => {
     }
   };
 
+  const goBackToMain = () => {
+    setShowGraph(false);
+  }
+
   return (
     <div className="Main">
       {/* 그래프 true 상태로 바꾸기 */}
@@ -443,11 +448,11 @@ const App = () => {
       ) : (
         currentPage === 'signup' ? (
           <SignUp 
-            resetAppState={resetAppState}  // resetAppState를 props로 전달
-            toggleSidebar={() => setSidebarVisible(!sideBarVisible)} 
+            resetAppState={resetAppState}
+            toggleSidebar={() => setSidebarVisible(!sideBarVisible)}
             sideBarVisible={sideBarVisible}
-            navigateToMain={navigateToMain} 
-            toggleSignUp={toggleSignUp} 
+            navigateToMain={navigateToMain}
+            toggleSignUp={toggleSignUp}
             setElapsedTime={setElapsedTime}
             setSleepCount={setSleepCount}
             setUser={setUser}
@@ -489,6 +494,7 @@ const App = () => {
               sleepCount={sleepCount}         // sleepCount 값 전달
               timerTime={timerTime}           // timerTime 전달
               setTimerTime={setTimerTime}     // timerTime 업데이트 함수 전달
+              goToGraph={goToGraph}
               resetAppStateWithSync={resetAppStateWithSync}
               saveDailyData={saveDailyData}
             />
