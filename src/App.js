@@ -563,21 +563,6 @@ const App = () => {
                 alt="UnderReset" 
               />
             </div>
-
-            {/* 그래프 보기 버튼 */}
-            <div className="GraphButton" onClick={goToGraph}>
-              <button style={{
-                backgroundColor: '#8B4513', // 갈색 배경
-                color: 'white',
-                borderRadius: '50%',
-                padding: '10px',
-                border: 'none',
-                cursor: 'pointer'
-              }}>
-                내 집중기록
-              </button>
-            </div>
-
             {!isStarted && (
               <div className="startButton" 
                 onClick={connectStart}>

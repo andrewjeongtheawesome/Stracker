@@ -1,0 +1,136 @@
+.Login {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    background: white;
+    cursor: pointer;
+  }
+  
+  .Background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(249, 228, 211, 0.33);
+  }
+  
+  .Logo {
+    width: 8.26vw;
+    height: 8.26vw;
+    left: 1.11vw;
+    top: 1vh;
+    position: absolute;
+  }
+  
+  /*로그인 타이틀*/
+  .LoginTitleLine {
+    width: 15.28vw;
+    height: 0;
+    top: 10%;
+    left: 43.75vw;
+    position: absolute;
+    border: 0.21vw solid #DCC5B3;
+  }
+  
+  .LoginTitleText {
+    top: 12%;
+    left: 45.14vw;
+    position: absolute;
+    color: #C4AB97;
+    font-size: 3.13vw;
+    font-family: 'Inter';
+    font-weight: 700;
+    word-wrap: break-word;
+  }
+  
+  /*로그인_메일, 비밀번호*/
+  .LogineMailBox {
+    width: 37vw;
+    height: 9.77vh;
+    left: 23vw;
+    top: 43vh;
+    font-size: 1.5vw;
+    font-family: 'Inter';
+    font-weight: 400;
+    word-wrap: break-word;
+    position: absolute;
+    background: white;
+    border-radius: 0.69vw;
+    border: 0.14vw solid #674429;
+  }
+  
+  .LoginPasswordBox {
+    width: 37vw;
+    height: 9.77vh;
+    left: 23vw;
+    top: 54vh;
+    font-size: 1.5vw;
+    font-family: 'Inter';
+    font-weight: 400;
+    word-wrap: break-word;
+    position: absolute;
+    background: white;
+    border-radius: 0.69vw;
+    border: 0.14vw solid #674429;
+  }
+  
+  /*로그인 완료*/
+  .LoginBox {
+    width: 12.99vw;
+    height: 20vh;
+    top: 43vh;
+    left: 62vw;
+    position: relative;
+    background: #674429;
+    border-radius: 0.69vw;
+    border: 0.14vw solid #674429;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  
+  .LoginText {
+    position: absolute;
+    color: white;
+    font-size: 1.94vw;
+    font-family: 'Inter';
+    font-weight: 600;
+    word-wrap: break-word;
+    top: 35%;
+    left: 27%;
+  }
+  
+  /*회원가입 이동*/
+  .UnderSignupHelper {
+    top: 67%;
+    left: 35vw;
+    position: absolute;
+    color: #674429;
+    font-size: 18px;
+    font-family: 'Inter';
+    font-weight: 700;
+    word-wrap: break-word;
+  }
+  
+  .UnderSignupHelperLine {
+    width: 70px;
+    height: 0;
+    transform: rotate(1.21deg);
+    transform-origin: 0 0;
+    border: 1.5px #674429 solid;
+    margin-top: 2px;
+  }
+  
+  .UnderSignupHelperText {
+    top: 68%;
+    left: 23vw;
+    position: absolute;
+    color: black;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 100;
+    word-wrap: break-word;
+  }
+  

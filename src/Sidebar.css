@@ -1,6 +1,6 @@
 .Side {
   width: 20vw;
-  height: 50vh;
+  height: 58vh;
   position: fixed;
   background: #DCC5B3;
   border-bottom-left-radius: 2vh;
@@ -91,7 +91,7 @@
   width: 1.2vw;
   height: 2.3vh;
   right: 3.13vw;
-  top: 44vh;
+  top: 54vh;
   cursor: pointer;
   position: absolute;
 }
@@ -100,7 +100,7 @@
   width: 1.2vw;
   height: 2.08vh;
   right: 1.39vw;
-  top: 44.1vh;
+  top: 54.1vh;
   cursor: pointer;
   position: absolute;
 }
@@ -189,4 +189,24 @@
   font-weight: 500;
   white-space: pre-line;
   position: absolute;
+}
+
+/*로그인 후 카테고리*/
+.Line {
+  width: 18vw;
+  height: 2vh;
+  left: 1vw;
+  top: 40vh;
+  position: absolute;
+}
+
+.GraphButton{
+  left: 5.5vw;
+  top: 43vh;
+  background: #DCC5B3;
+  color: #674429;
+  font-size: 1.2vw;
+  border-radius: 0;
+  position: absolute;
+  cursor: 'pointer';
 }
