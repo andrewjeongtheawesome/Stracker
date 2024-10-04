@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import './Sidebar.css';
+import Login from './Login';
 import SignUp from './Signup';
 import Sidebar from './Sidebar';
 import logo from './_logo.png';
@@ -61,7 +62,7 @@ const App = () => {
     return StateNoFace;
   };
 
-  // 초기 상태 설정 로직
+  // 초기 상태 설정 로직on
   const resetAppState = () => {
     setTimerTime(0);
     pauseTimer();
@@ -437,148 +438,147 @@ const App = () => {
   };
 
   const goBackToMain = () => {
-    setShowGraph(false);
+    setShowGraph(false);  // 그래프 페이지에서 메인 페이지로 돌아가는 로직
+  };
+
+  if (!isLoggedIn) {
+    return <Login setIsLoggedIn={setIsLoggedIn} setUser={setUser} />;
   }
+  
 
   return (
     <div className="Main">
-      {/* 그래프 true 상태로 바꾸기 */}
-      {showGraph ? ( // showGraph가 true면 Graph.js 렌더링
-        <Graph user={user} /> // Graph 컴포넌트에 user 전달
+      {/* 로그인되지 않은 상태라면 Login.js 렌더링 */}
+      {!isLoggedIn ? (
+        <Login 
+          setUser={setUser}
+          setIsLoggedIn={setIsLoggedIn}
+          setUserName={setUserName}
+          setElapsedTime={setElapsedTime}
+          setSleepCount={setSleepCount}
+        />
       ) : (
-        currentPage === 'signup' ? (
-          <SignUp 
-            resetAppState={resetAppState}
-            toggleSidebar={() => setSidebarVisible(!sideBarVisible)}
-            sideBarVisible={sideBarVisible}
-            navigateToMain={navigateToMain}
-            toggleSignUp={toggleSignUp}
-            setElapsedTime={setElapsedTime}
-            setSleepCount={setSleepCount}
-            setUser={setUser}
-            setIsLoggedIn={setIsLoggedIn}
-            resetAppStateWithSync={resetAppStateWithSync}
-          />
-        ) : (
-          <>
-            <div className="Background" />
-            <img 
-              className="Logo" 
-              src={logo} 
-              alt="Logo" 
-              onClick={navigateToMain}
-            />
-            <div className="CameraScreen">
-              <video ref={videoRef} className="videoInput" style={{ display: 'block' }} />
-            </div>
-            <img
-              className="SideButton"
-              src={SideButton}
-              alt="SideButton"
-              onClick={() => setSidebarVisible(!sideBarVisible)}
-            />
-            <Sidebar 
-              sideBarVisible={sideBarVisible}
-              toggleSidebar={() => setSidebarVisible(!sideBarVisible)}
-              toggleSignUp={toggleSignUp}
-              user={user}
-              isLoggedIn={isLoggedIn}
-              setIsLoggedIn={setIsLoggedIn}
-              handleLogOut={handleLogOut}
-              resetAppState={resetAppState}
-              setHeartRate={setHeartRate}
-              setElapsedTime={setElapsedTime} // elapsedTime 업데이트 함수 전달
-              setSleepCount={setSleepCount}   // sleepCount 업데이트 함수 전달
-              setUser={setUser}               // setUser 함수 전달
-              elapsedTime={elapsedTime}       // elapsedTime 값 전달
-              sleepCount={sleepCount}         // sleepCount 값 전달
-              timerTime={timerTime}           // timerTime 전달
-              setTimerTime={setTimerTime}     // timerTime 업데이트 함수 전달
-              goToGraph={goToGraph}
-              resetAppStateWithSync={resetAppStateWithSync}
-              saveDailyData={saveDailyData}
-            />
-            <div className="Time">
-              <div className="TimerDate">{currentDate}</div>
-              <div className="TimerTime">{formatTime(timerTime)}</div>
-            </div>
-            <div className="State">
-              <div className="StateBox" />
-              <div className="StateText">{getStateText()}</div>
-              <img 
-                className="StatePicture" 
-                src={getStatePicture()} 
-                alt="StatePicture" 
+        /* 기존 그래프, 회원가입, 메인 UI 렌더링 */
+        <>
+          {showGraph ? (
+            <Graph user={user} goBackToMain={goBackToMain} />
+          ) : (
+            currentPage === 'signup' ? (
+              <SignUp 
+                resetAppState={resetAppState}
+                toggleSidebar={() => setSidebarVisible(!sideBarVisible)}
+                sideBarVisible={sideBarVisible}
+                navigateToMain={navigateToMain}
+                toggleSignUp={toggleSignUp}
+                setElapsedTime={setElapsedTime}
+                setSleepCount={setSleepCount}
+                setUser={setUser}
+                setIsLoggedIn={setIsLoggedIn}
+                resetAppStateWithSync={resetAppStateWithSync}
               />
-            </div>
-            <div className="HeartRate">
-              <div className="HeartRateTitleBox">
-                <div className="HeartRateTitle">현재 심박수</div>
-              </div>
-              <img 
-                className="HeartRatePicture" 
-                src={HeartRatePicture} 
-                alt="HeartRatePicture" 
-              />
-              <div className="HeartRateBpm"> {heartRate} BPM</div>
-            </div>
-            <div className="SleepCount">
-              <div className="SleepCountTitleBox">
+            ) : (
+              <>
+                {/* 나머지 UI */}
+                <div className="Background" />
+                <img 
+                  className="Logo" 
+                  src={logo} 
+                  alt="Logo" 
+                  onClick={navigateToMain}
+                />
+                <div className="CameraScreen">
+                  <video ref={videoRef} className="videoInput" style={{ display: 'block' }} />
+                </div>
+                <img
+                  className="SideButton"
+                  src={SideButton}
+                  alt="SideButton"
+                  onClick={() => setSidebarVisible(!sideBarVisible)}
+                />
+                <Sidebar 
+                  sideBarVisible={sideBarVisible}
+                  toggleSidebar={() => setSidebarVisible(!sideBarVisible)}
+                  toggleSignUp={toggleSignUp}
+                  user={user}
+                  isLoggedIn={isLoggedIn}
+                  setIsLoggedIn={setIsLoggedIn}
+                  handleLogOut={handleLogOut}
+                  resetAppState={resetAppState}
+                  setHeartRate={setHeartRate}
+                  setElapsedTime={setElapsedTime} 
+                  setSleepCount={setSleepCount}   
+                  setUser={setUser}               
+                  elapsedTime={elapsedTime}       
+                  sleepCount={sleepCount}         
+                  timerTime={timerTime}           
+                  setTimerTime={setTimerTime}     
+                  goToGraph={goToGraph}
+                  resetAppStateWithSync={resetAppStateWithSync}
+                  saveDailyData={saveDailyData}
+                />
+                <div className="Time">
+                  <div className="TimerDate">{currentDate}</div>
+                  <div className="TimerTime">{formatTime(timerTime)}</div>
+                </div>
+                <div className="State">
+                  <div className="StateBox" />
+                  <div className="StateText">{getStateText()}</div>
+                  <img 
+                    className="StatePicture" 
+                    src={getStatePicture()} 
+                    alt="StatePicture" 
+                  />
+                </div>
+                <div className="HeartRate">
+                  <div className="HeartRateTitleBox">
+                    <div className="HeartRateTitle">현재 심박수</div>
+                  </div>
+                  <img 
+                    className="HeartRatePicture" 
+                    src={HeartRatePicture} 
+                    alt="HeartRatePicture" 
+                  />
+                  <div className="HeartRateBpm"> {heartRate} BPM</div>
+                </div>
+                <div className="SleepCount">
+                  <div className="SleepCountTitleBox">
+                    <div 
+                      className="SleepCountTitle"
+                      src={sleepCount}
+                      alt="sleepCount">졸음 횟수</div>
+                  </div>
+                  <img 
+                    className="SleepCountPicture" 
+                    src={SleepCountPicture} 
+                    alt="SleepCountPicture" 
+                  />
+                  <div className="SleepCountNumber"> {sleepCount} 번</div>
+                </div>
                 <div 
-                  className="SleepCountTitle"
-                  src={sleepCount}
-                  alt="sleepCount">졸음 횟수</div>
-              </div>
-              <img 
-                className="SleepCountPicture" 
-                src={SleepCountPicture} 
-                alt="SleepCountPicture" 
-              />
-              <div className="SleepCountNumber"> {sleepCount} 번</div>
-            </div>
-            {/*버튼 실종시킴요
-            <div 
-              className="UnderPlayButton" 
-              onClick={startTimer}>
-              <img 
-                className="UnderPlay" 
-                src={UnderPlay} 
-                alt="UnderPlay" 
-              />
-            </div>
-            <div 
-              className="UnderPauseButton" 
-              onClick={pauseTimer}>
-              <img 
-                className="UnderPause" 
-                src={UnderPause} 
-                alt="UnderPause" 
-              />
-            </div>
-            */}
-            <div 
-              className="UnderResetButton"
-              onClick={() => {
-                if (window.confirm("리셋하시겠습니까?")) {
-                  resetTimer();
-                }
-              }}>
-              <img 
-                className="UnderReset" 
-                src={UnderReset} 
-                alt="UnderReset" 
-              />
-            </div>
-            {!isStarted && (
-              <div className="startButton" 
-                onClick={connectStart}>
-                <div className="StartText">시 작</div>
-              </div>
-            )}
-          </>
-        )
+                  className="UnderResetButton"
+                  onClick={() => {
+                    if (window.confirm("리셋하시겠습니까?")) {
+                      resetTimer();
+                    }
+                  }}>
+                  <img 
+                    className="UnderReset" 
+                    src={UnderReset} 
+                    alt="UnderReset" 
+                  />
+                </div>
+                {!isStarted && (
+                  <div className="startButton" 
+                    onClick={connectStart}>
+                    <div className="StartText">시 작</div>
+                  </div>
+                )}
+              </>
+            )
+          )}
+        </>
       )}
     </div>
-  );
+  );  
 };
 export default App;

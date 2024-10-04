@@ -5,7 +5,7 @@ import { db } from './firebaseConfig';
 import 'chart.js/auto';
 import './Graph.css';
 
-const Graph = ({ user }) => {
+const Graph = ({ user, goBackToMain }) => {
   const [data, setData] = useState([]);
   const [graphType, setGraphType] = useState('both');
   const [startDate, setStartDate] = useState('');
@@ -91,8 +91,10 @@ const Graph = ({ user }) => {
 
   return (
     <div className="graphContainer">
-      <h2>공부 시간 및 졸음 횟수 그래프</h2>
-  
+      <div className='title'>공부 시간 및 졸음 횟수 그래프</div>
+      <button onClick={goBackToMain} className="backButton">
+        돌아가기
+      </button>
       <div>
         <label>
           <input
@@ -122,7 +124,7 @@ const Graph = ({ user }) => {
           둘 다 보기
         </label>
       </div>
-  
+
       <div>
         <label>시작 날짜: </label>
         <input
@@ -137,10 +139,10 @@ const Graph = ({ user }) => {
           onChange={(e) => setEndDate(e.target.value)}
         />
       </div>
-  
+
       <Line data={chartData} options={options} />
     </div>
   );
-}
+};
 
 export default Graph;
