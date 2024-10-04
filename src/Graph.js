@@ -2,14 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import { getDocs, collection } from 'firebase/firestore';
 import { db } from './firebaseConfig';
+import { useNavigate } from 'react-router-dom'; // useNavigate 추가
 import 'chart.js/auto';
+import './App';
 import './Graph.css';
 
-const Graph = ({ user }) => {
+const Graph = ({ user, goBackToMain }) => {
   const [data, setData] = useState([]);
   const [graphType, setGraphType] = useState('both');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+  const navigate = useNavigate(); // useNavigate 훅 사용
 
   useEffect(() => {
     if (user) {
@@ -92,7 +95,7 @@ const Graph = ({ user }) => {
   return (
     <div className="graphContainer">
       <h2>공부 시간 및 졸음 횟수 그래프</h2>
-  
+      <button onClick={() => navigate('/')}>홈으로 가기</button> {/* 페이지 이동을 위한 navigate 사용 */}
       <div>
         <label>
           <input

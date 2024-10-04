@@ -5,15 +5,18 @@ import logo from './_logo.png';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from './firebaseConfig';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
 
 const Login = ({ 
   setUser, setIsLoggedIn, 
-  setUserName, setElapsedTime, setSleepCount 
+  setUserName, setElapsedTime, setSleepCount
   //toggleSignUp, setHeartRate, elapsedTime, sleepCount, timerTime
 }) => {
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [isSigningUp, setIsSigningUp] = useState(false);
+
+  const navigate = useNavigate();  // useNavigate 훅 사용
 
   const handleUserEmail = (event) => setUserEmail(event.target.value);
   const handleUserPassword = (event) => setUserPassword(event.target.value);
@@ -21,7 +24,7 @@ const Login = ({
   // 로그인 처리
   const handleLogin = async () => {
     try {
-      //const email = `${userEmail}`;
+      // Firebase 인증으로 로그인 시도
       const userCredential = await signInWithEmailAndPassword(auth, userEmail, userPassword);
       const userDoc = await getDoc(doc(db, "users", userCredential.user.uid));
       
@@ -32,6 +35,9 @@ const Login = ({
         setSleepCount(userData.sleepCount);
         setUser(userCredential.user);
         setIsLoggedIn(true);
+        
+        // 로그인 성공 후 메인 화면으로 이동
+        navigate('/');  // '/home' 경로로 이동
       } else {
         console.error('사용자 정보를 찾을 수 없습니다.');
       }
@@ -43,7 +49,7 @@ const Login = ({
 
     // 회원가입 버튼 클릭 시 호출
     const handleSignUpClick = () => {
-      setIsSigningUp(true);  // 회원가입 모드로 전환
+      navigate('/signup') // 회원가입 모드로 전환
     };
 
     if (isSigningUp) {

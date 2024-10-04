@@ -8,9 +8,10 @@ import { auth, db } from './firebaseConfig';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { resetAppStateWithSync } from './App'; // App.js에서 만든 함수 가져오기
+import { useNavigate } from 'react-router-dom';
 import App from './App';
 
-const SignUp = ({toggleSidebar, sideBarVisible, navigateToMain, 
+const SignUp = ({toggleSidebar, sideBarVisible, navigateToMain,
   toggleSignUp, resetAppState, setElapsedTime, setSleepCount, 
   setUser, setIsLoggedIn, resetAppStateWithSync}) => {
   const [userId, setUserId] = useState('');
@@ -21,6 +22,7 @@ const SignUp = ({toggleSidebar, sideBarVisible, navigateToMain,
   const [userEmailDomain, setUserEmailDomain] = useState('');
   const [customEmailDomain, setCustomEmailDomain] = useState('');
   const [showEmailDropdown, setShowEmailDropdown] = useState(false);
+  const [currentPage, setCurrentPage] = useState('login');
 
   const handleUserIdChange = (event) => setUserId(event.target.value);
   // Password 입력란에 입력된 값이 변경 시 호출
@@ -33,6 +35,8 @@ const SignUp = ({toggleSidebar, sideBarVisible, navigateToMain,
   const handleUserEmailChange = (event) => setUserEmail(event.target.value);
   // EmailSelect 입력란에 입력된 값이 변경 시 호출
   const toggleEmailDropdown = () => setShowEmailDropdown(!showEmailDropdown);
+
+  const navigate = useNavigate()
 
   // EmailSelect 입력란에 입력된 값이 변경 시 호출
   const handleEmailDomainSelect = (domain) => {
@@ -59,10 +63,6 @@ const SignUp = ({toggleSidebar, sideBarVisible, navigateToMain,
       return;
     }
 
-    if(userPassword >= 8 && userPassword <=20){
-      alert("비밀")
-    }
-
     try {
       const emailDomain = customEmailDomain || userEmailDomain;
       const email = `${userEmail}@${emailDomain}`;
@@ -70,7 +70,6 @@ const SignUp = ({toggleSidebar, sideBarVisible, navigateToMain,
       const user = userCredential.user;
 
       await setDoc(doc(db, "users", user.uid), {
-        //userId, ID 필요없어서 없애봄
         userName,
         userEmail: email,
         userPassword,
@@ -79,14 +78,19 @@ const SignUp = ({toggleSidebar, sideBarVisible, navigateToMain,
       });
 
       alert("회원가입이 완료되었습니다.");
-
       resetAppState();  // 회원가입이 완료된 후 초기 상태로 설정
-      navigateToMain(); // 메인 페이지로 이동
 
+      navigate('/login');
+      
     } catch (error) {
       console.error("Error signing up: ", error);
       alert("회원가입에 실패했습니다. 에러 메시지: " + error.message);
     }
+  };
+
+  // 로그인 페이지로 이동하는 함수
+  const navigateToLogin = () => {
+    navigate("/login");
   };
 
   // Sidebar.js
@@ -118,7 +122,6 @@ const SignUp = ({toggleSidebar, sideBarVisible, navigateToMain,
     }
   };
 
-
   return (
     <div className="SignUp">
       <div className="Background" />
@@ -126,10 +129,7 @@ const SignUp = ({toggleSidebar, sideBarVisible, navigateToMain,
         className="Logo"
         src={logo}
         alt="Logo"
-        onClick={() => {
-          navigateToMain();
-          toggleSidebar();
-        }}
+        onClick={navigateToLogin}
       />
       {/*사이드바 없애기
       <img
