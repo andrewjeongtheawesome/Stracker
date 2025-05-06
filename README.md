@@ -1,5 +1,6 @@
 # Stracker : face-mesh를 활용한 공부 추적 어플리케이션
-##현재는 서버가 종료되어 작동되지 않습니다.
+*현재는 서버가 종료되어 작동하지 않습니다.
+
 ![슬라이드3](https://github.com/user-attachments/assets/4415891e-0537-40f1-aa53-3568d7edfdfb)
 ![슬라이드4](https://github.com/user-attachments/assets/1c899d77-d391-493d-8a4d-be433a280aca)
 ![슬라이드5](https://github.com/user-attachments/assets/c99bbdb3-9abe-4e60-8ba8-a0c8beddf644)
